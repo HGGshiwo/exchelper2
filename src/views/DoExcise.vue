@@ -100,8 +100,17 @@ export default {
 
         submitAll(){
             for(var i = 0; i < this.$data.excList.length; i++){
-                this.excList[i].submit = true;
-                this.handleSubmit(this.excList[i]);
+                var active = false;
+                for(var j = 0; j < this.excList[i].choices.length; j++){
+                    if(this.excList[i].choices[j].active){
+                        active = true;
+                        break;
+                    }
+                }
+                if(active){
+                    this.excList[i].submit = true;
+                    this.handleSubmit(this.excList[i]);
+                }
             }
         },
 

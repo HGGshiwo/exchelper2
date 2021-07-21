@@ -1,24 +1,20 @@
 # exchelper2
 
-## Project setup
-```
-npm install
-```
+不要使用Chrome!
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 使用指南
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### 自选
 
-### Lints and fixes files
-```
-npm run lint
-```
+- 在自选界面选择题库，当前只支持选择一个题库
+- 点击右侧导航栏的刷题进入刷题模式
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 刷题
+
+- 在刷题界面，左键点击选项选择，再次点击取消选择
+- 右键点击选项提交答案，注意：被点击的选项也会被选择
+- 选项提交后将会显示答案。
+- 对于已经提交的选项，支持右键点击被选择的选项，取消提交
+- 点击页面下方工具栏中重做，取消所有提交
+- 点击页面下方工具栏中提交，提交所有选项
+
