@@ -1,10 +1,11 @@
 [
     {
-        "name": "毛概题集 by 尼德霍格",
+        "name": "毛概题集",
         "path": "毛概题集.json",
         "num": 1116,
         "lastTime": "2021-7-20",
-        "active": true
+        "active": true,
+        "author": "尼德霍格"
     },
     
     {
@@ -12,6 +13,7 @@
         "path": "test2.json",
         "num": 10,
         "lastTime": "2021-7-20",
-        "active": false
+        "active": false,
+        "author": "test"
     }
 ]

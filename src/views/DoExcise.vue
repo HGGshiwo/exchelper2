@@ -1,7 +1,7 @@
 <template>
     <div style="left">        
         <div class="container">
-            <ul style="padding:0px; margin:0px">
+            <ul style="padding:0px; margin:0px;">
                 <div class="exc" v-for="exc in this.excList" :key="exc.id">
                     <span class="exc-text">
                         <span style="margin-right:1%">{{exc.id}}</span>
@@ -11,7 +11,7 @@
                         <div v-for="choice in exc.choices" :key="choice.id"
                             v-bind:class="{'choice':true, 'active': choice.active}" 
                             v-on:click.left="choice.active=exc.submit?choice.active :!choice.active"
-                            v-on:click.right=";if(!exc.submit) choice.active = true; if(!(exc.submit && !choice.active)) exc.submit = !exc.submit; if(exc.submit && choice.active) handleReset(exc); if(!exc.submit) handleSubmit(exc);">
+                            v-on:click.right=";if(exc.submit && choice.active){ exc.submit = !exc.submit; handleReset(exc); } else if(!exc.submit && choice.active){exc.submit = !exc.submit; handleSubmit(exc);} else if(!exc.submit && !choice.active){exc.submit = !exc.submit; choice.active = true; handleSubmit(exc);}">
                             <span class="choice-id">{{choice.id}}</span>
                             <span class="choice-text">{{choice.text}}</span>
                         </div>
@@ -36,10 +36,13 @@
             </div>        
         <ul class="bar">
             <div class="inner-bar">
-                <div class="bar-text" v-on:click="toHome()">自选</div>
+                <img src="../assets/select.png"  style="width:40px; height:40px" v-on:click="toHome()" />
             </div>
-            <div class="inner-bar" v-on:click="toDoExcise()">
-                <div class="bar-text">刷题</div>
+            <div class="inner-bar">
+                <img src="../assets/do-excise-active.png"  style="width:40px; height:40px" v-on:click="toDoExcise()"/>
+            </div>
+            <div class="inner-bar">
+                <img src="../assets/about.png"  style="width:40px; height:40px" v-on:click="toAbout()"/>
             </div>
         </ul>
     </div>
@@ -49,24 +52,13 @@
 export default {
     name: "DoExcise",
     data() {
-        var curExcSetList = JSON.parse(this.$route.params.data);
-        var t = [];
-        var n = [];
-        for(var i = 0; i < curExcSetList.length; i++){
-            n.push(curExcSetList[i].name);
-            this.$axios.get(curExcSetList[i].path).then(res => {
-                var json = JSON.parse(res.request.responseText); // 获取public下的test.json文件数据
-                console.log(json);
-                t.push.apply(t, json);
-            })
-        }
         var date = new Date();
         return{
-            curSet: n.join(','),
+            curSet: null,
             curExc: 0,
             corList: [],
             doneList: [],
-            excList: t,
+            excList: [],
             startHour:date.getHours(),
             startMim:date.getMinutes(),
             dTime: "00:00",
@@ -82,14 +74,44 @@ export default {
                 }, 1000)
         }
     },
+    mounted(){
+        var curExcSetList = JSON.parse(this.$route.params.data);
+        this.curSet = curExcSetList[0].name;
+        var data = localStorage.getItem(this.curSet);
+        console.log(data);
+        var t = [];
+        if(!data){
+            this.$axios.get(curExcSetList[0].path).then(res => {
+                var json = JSON.parse(res.request.responseText); 
+                t.push.apply(t, json);
+            })
+            this.excList = t;
+        }
+        else{
+            var json = JSON.parse(data);
+            this.curExc = json.curExc;
+            this.corList = json.corList;
+            this.doneList = json.doneList;
+            this.excList = json.excList;
+        }
+    },
     beforeDestroy(){
         if(this.timer){
             clearInterval(this.timer);
         }
+        var data = {}
+        data.curExc = this.curExc;
+        data.excList = this.excList;
+        data.corList = this.corList;
+        data.doneList = this.doneList;
+        console.log(this.curSet);
+        localStorage.setItem(this.curSet, JSON.stringify(data));
     },
 
     methods: {
-        
+        toAbout(){
+
+        },
         calcCorRate() {
             var rate = 0.0;
             if(this.$data.doneList.length != 0)
@@ -264,7 +286,7 @@ export default {
         background-color:whitesmoke;
         justify-content: flex-start;
         text-align: left;
-        margin-bottom: 20px;
+        margin-top: 20px;
         margin-left: 5%;
         border-radius: 10px;
         padding-top: 5px;

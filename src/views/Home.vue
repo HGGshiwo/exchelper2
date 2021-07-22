@@ -6,7 +6,10 @@
                     v-for="excSet in excSetList" 
                     v-bind:key="excSet.name"
                     v-on:click.left="curExcSet.active = false; excSet.active=true; curExcSet = excSet;">
-                    <div class="home item-text">{{excSet.name}}</div>
+                    <span class="home item-text">{{excSet.name}} </span>
+                    <span class="home item-sec-text">作者 {{excSet.author}}</span>
+                    <span class="home item-sec-text">题数 {{excSet.num}}</span>
+                    <span class="home item-sec-text">更新时间 {{excSet.lastTime}}</span>
                 </div>
             </ul>
         </div>
@@ -14,15 +17,16 @@
             <div class="inner-tab" style="float:right">自选</div>
             <div class="inner-tab" style="float:right">偏好</div>
             <div class="inner-tab" v-if="this.curExcSet!=null">当前题集 {{this.curExcSet.name}}</div>
-            <div class="inner-tab" v-if="this.curExcSet!=null">更新时间 {{this.curExcSet.lastTime}}</div>
-            <div class="inner-tab" v-if="this.curExcSet!=null">题数 {{this.curExcSet.num}}</div>
         </div>        
         <ul class="bar">
             <div class="inner-bar">
-                <div class="bar-text" v-on:click="toHome()">自选</div>
+                <img src="../assets/select-active.png"  style="width:40px; height:40px" v-on:click="toHome()" />
             </div>
             <div class="inner-bar">
-                <div class="bar-text" v-on:click="toDoExcise()">刷题</div>
+                <img src="../assets/do-excise.png"  style="width:40px; height:40px" v-on:click="toDoExcise()"/>
+            </div>
+            <div class="inner-bar">
+                <img src="../assets/about.png"  style="width:40px; height:40px" v-on:click="toAbout()"/>
             </div>
         </ul>
     </div>
@@ -66,6 +70,9 @@ export default {
         toHome(){
             location.reload();
         },
+        toAbout(){
+
+        }
     }
 }
 </script>
@@ -105,7 +112,10 @@ export default {
     .home.item-text{     
         font-size: 20px;
     }
-
+    .home.item-sec-text{
+        font-size: 15px;
+        padding-left: 1%;
+    }
     .tab{
         width: 100%;
         height: 25px;
@@ -145,5 +155,10 @@ export default {
         font-size:20px; 
         color: lightgray;
         font-weight: bold;
+    }
+
+    .bar-img{
+        width: 5%;
+        height: auto;
     }
 </style>
