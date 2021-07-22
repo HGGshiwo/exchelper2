@@ -87,7 +87,9 @@ export default {
 
     .home.exc{
         width: 80%;
-        margin-left: 5%;
+        padding: 0%;
+        margin-left: auto;
+        margin-right: auto;
         background-color: white;
     }
 
@@ -123,6 +125,7 @@ export default {
         justify-content: space-around;
         position: fixed;
         bottom: 0;
+        z-index: 2;
     }
     .inner-tab{
         color: white;
@@ -137,28 +140,18 @@ export default {
     }
 
     .bar{
-        width:5%;
+        width: 60px;
         height: 100%;
         background-color: #303030;
         position: fixed;
-        z-index: -1;
         margin: 0%;
         padding: 0%;
+        z-index: 1;
     }
 
     .inner-bar{
+        width: auto;
         margin-top: 30px;
         margin-bottom: 30px;
-    }
-
-    .bar-text{
-        font-size:20px; 
-        color: lightgray;
-        font-weight: bold;
-    }
-
-    .bar-img{
-        width: 5%;
-        height: auto;
     }
 </style>

@@ -10,8 +10,8 @@
                     <ul style="padding:0">
                         <div v-for="choice in exc.choices" :key="choice.id"
                             v-bind:class="{'choice':true, 'active': choice.active}" 
-                            v-on:click.left="choice.active=exc.submit?choice.active :!choice.active"
-                            v-on:click.right=";if(exc.submit && choice.active){ exc.submit = !exc.submit; handleReset(exc); } else if(!exc.submit && choice.active){exc.submit = !exc.submit; handleSubmit(exc);} else if(!exc.submit && !choice.active){exc.submit = !exc.submit; choice.active = true; handleSubmit(exc);}">
+                            v-on:click.left="choice.active=exc.submit?choice.active :!choice.active; if(!exc.submit) checkChooseLogic(exc, choice);"
+                            v-on:click.right=";if(exc.submit && choice.active){ exc.submit = !exc.submit; handleReset(exc); } else if(!exc.submit && choice.active){exc.submit = !exc.submit; handleSubmit(exc);} else if(!exc.submit && !choice.active){exc.submit = !exc.submit; choice.active = true; checkChooseLogic(exc, choice); handleSubmit(exc);}">
                             <span class="choice-id">{{choice.id}}</span>
                             <span class="choice-text">{{choice.text}}</span>
                         </div>
@@ -146,6 +146,16 @@ export default {
             }
         },
 
+        checkChooseLogic(exc, choice){
+            if(exc.key.length == 1){
+                for(var i = 0; i < exc.choices.length; i++){
+                    if(exc.choices[i].id != choice.id){
+                        exc.choices[i].active = false;
+                    }
+                }
+            }
+        },
+
         onSearch(){
             alert("未实现搜索功能。");
         },
@@ -260,7 +270,7 @@ export default {
     }
 
     .bar{
-        width:5%;
+        width:60px;
         height: 100%;
         background-color: #303030;
         position: fixed;
@@ -272,12 +282,6 @@ export default {
     .inner-bar{
         margin-top: 30px;
         margin-bottom: 30px;
-    }
-
-    .bar-text{
-        font-size:20px; 
-        color: lightgray;
-        font-weight: bold;
     }
 
     .exc{

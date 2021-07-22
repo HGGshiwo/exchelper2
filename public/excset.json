@@ -7,13 +7,12 @@
         "active": true,
         "author": "尼德霍格"
     },
-    
     {
-        "name": "excSet2",
-        "path": "test2.json",
-        "num": 10,
-        "lastTime": "2021-7-20",
+        "name": "马原题库全",
+        "path": "马原题库全.json",
+        "num": 733,
+        "lastTime": "2021-7-21",
         "active": false,
-        "author": "test"
+        "author": "Ser"
     }
 ]
