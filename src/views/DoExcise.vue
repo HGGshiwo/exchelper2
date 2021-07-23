@@ -1,8 +1,19 @@
 <template>
-    <div style="left">        
+    <div>
+        <ul class="bar">
+            <div class="inner-bar">
+                <img src="../assets/select.png"  style="width:40px; height:40px" v-on:click="toHome()" />
+            </div>
+            <div class="inner-bar">
+                <img src="../assets/do-excise-active.png"  style="width:40px; height:40px" v-on:click="toDoExcise()"/>
+            </div>
+            <div class="inner-bar">
+                <img src="../assets/about.png"  style="width:40px; height:40px" v-on:click="toAbout()"/>
+            </div>
+        </ul>        
         <div class="container">
-            <ul style="padding:0px; margin:0px;">
-                <div class="exc" v-for="exc in this.excList" :key="exc.id">
+            <ul class="exc">
+                <div class="exc-item" v-for="exc in this.excList" :key="exc.id">
                     <span class="exc-text">
                         <span style="margin-right:1%">{{exc.id}}</span>
                         <span>{{exc.text}}</span>
@@ -24,27 +35,18 @@
             <div style="height:25px; width:100%"></div>    
         </div>
         <div class="tab">
-                <div class="inner-tab">题集 {{this.$data.curSet}} </div>
-                <div class="inner-tab">题号 {{this.$data.curExc}} </div>
-                <div class="inner-tab">正确率 {{calcCorRate()}} </div>
-                <div class="inner-tab">开始 {{('00' + this.startHour.toString()).slice(-2) + ":" + ('00'+this.startMim.toString()).slice(-2)}} </div>
-                <div class="inner-tab">时长 {{this.dTime}} </div>
-                <div class="inner-tab" style="float:right">刷题模式</div>
-                <div class="inner-tab" style="float:right" v-on:click="submitAll">提交</div>
-                <div class="inner-tab" style="float:right" v-on:click="resetAll">重做</div>
-                <div class="inner-tab" style="float:right" v-on:click="onSearch">搜索</div>
-            </div>        
-        <ul class="bar">
-            <div class="inner-bar">
-                <img src="../assets/select.png"  style="width:40px; height:40px" v-on:click="toHome()" />
-            </div>
-            <div class="inner-bar">
-                <img src="../assets/do-excise-active.png"  style="width:40px; height:40px" v-on:click="toDoExcise()"/>
-            </div>
-            <div class="inner-bar">
-                <img src="../assets/about.png"  style="width:40px; height:40px" v-on:click="toAbout()"/>
-            </div>
-        </ul>
+            <div class="inner-tab" style="float:left;" v-on:click="submitAll">提交</div>
+            <div class="inner-tab" style="float:left;" v-on:click="resetAll">重做</div>
+            <div class="inner-tab" style="float:left" v-on:click="onSearch">搜索</div>
+            <div class="inner-tab">题集 {{this.$data.curSet}} </div>
+            <div class="inner-tab">题号 {{this.$data.curExc}} </div>
+            <div class="inner-tab">正确率 {{calcCorRate()}} </div>
+            <div class="inner-tab">开始 {{('00' + this.startHour.toString()).slice(-2) + ":" + ('00'+this.startMim.toString()).slice(-2)}} </div>
+            <div class="inner-tab">时长 {{this.dTime}} </div>
+            <div class="inner-tab" style="float:right">刷题模式</div>
+            
+        </div>        
+        
     </div>
 </template>
 
@@ -75,13 +77,13 @@ export default {
         }
     },
     mounted(){
-        var curExcSetList = JSON.parse(this.$route.params.data);
-        this.curSet = curExcSetList[0].name;
+        var curExcSet = JSON.parse(this.$route.params.data);
+        this.curSet = curExcSet.name;
         var data = localStorage.getItem(this.curSet);
         console.log(data);
         var t = [];
         if(!data){
-            this.$axios.get(curExcSetList[0].path).then(res => {
+            this.$axios.get(curExcSet.path).then(res => {
                 var json = JSON.parse(res.request.responseText); 
                 t.push.apply(t, json);
             })
@@ -109,9 +111,6 @@ export default {
     },
 
     methods: {
-        toAbout(){
-
-        },
         calcCorRate() {
             var rate = 0.0;
             if(this.$data.doneList.length != 0)
@@ -168,6 +167,13 @@ export default {
           this.$router.push({
               path: "/"
           });  
+        },
+
+        toAbout(){
+            this.$router.push({
+                name:"about",
+                params:this.$route.params.data
+            });
         },
 
         clacResultStyle(exc){
@@ -242,56 +248,19 @@ export default {
 </script>
 
 <style>
-    .container {
-        top: 0;
-        margin: 0%;
-        width: 95%;
-        float: right;
-    }
-
-    .tab{
-        width: 100%;
-        height: 25px;
-        background-color:  #4C70B7;       
-        justify-content: space-around;
-        position: fixed;
-        bottom: 0;
-    }
-    .inner-tab{
-        color: white;
-        width: auto;
-        height: 25px;
-        float: left;
-        vertical-align: -webkit-baseline-middle;
-        margin-right: 10px;
-        margin-left: 5px;
-        margin-top: 0.5px;
-        margin-bottom: 0.5px;
-    }
-
-    .bar{
-        width:60px;
-        height: 100%;
-        background-color: #303030;
-        position: fixed;
-        z-index: -1;
-        margin: 0%;
-        padding: 0%;
-    }
-
-    .inner-bar{
-        margin-top: 30px;
-        margin-bottom: 30px;
-    }
-
     .exc{
-        width: 90%;
+        padding: 0;
+        width: 100%;
+        margin: 0%;
+    }
+    .exc-item{
+        width: 80%;
         height: auto;
         background-color:whitesmoke;
-        justify-content: flex-start;
         text-align: left;
         margin-top: 20px;
-        margin-left: 5%;
+        margin-left: auto;
+        margin-right: auto;
         border-radius: 10px;
         padding-top: 5px;
     }
@@ -331,6 +300,7 @@ export default {
 
     .result{
         vertical-align: -webkit-baseline-middle;
+        width: 100%-2%;
         font-size: 20px;
         padding-left: 2%;
         padding-bottom: 5px;

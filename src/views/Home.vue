@@ -1,23 +1,5 @@
 <template>
     <div>
-        <div class="home container">
-            <ul class="home exc">
-                <div v-bind:class="{'home': true, 'exc-item':true, 'active':excSet.active}" 
-                    v-for="excSet in excSetList" 
-                    v-bind:key="excSet.name"
-                    v-on:click.left="curExcSet.active = false; excSet.active=true; curExcSet = excSet;">
-                    <span class="home item-text">{{excSet.name}} </span>
-                    <span class="home item-sec-text">作者 {{excSet.author}}</span>
-                    <span class="home item-sec-text">题数 {{excSet.num}}</span>
-                    <span class="home item-sec-text">更新时间 {{excSet.lastTime}}</span>
-                </div>
-            </ul>
-        </div>
-        <div class="tab">
-            <div class="inner-tab" style="float:right">自选</div>
-            <div class="inner-tab" style="float:right">偏好</div>
-            <div class="inner-tab" v-if="this.curExcSet!=null">当前题集 {{this.curExcSet.name}}</div>
-        </div>        
         <ul class="bar">
             <div class="inner-bar">
                 <img src="../assets/select-active.png"  style="width:40px; height:40px" v-on:click="toHome()" />
@@ -29,6 +11,24 @@
                 <img src="../assets/about.png"  style="width:40px; height:40px" v-on:click="toAbout()"/>
             </div>
         </ul>
+        <div class="container">
+            <ul class="home exc">
+                <div v-bind:class="{'home': true, 'exc-item':true, 'active':excSet.active}" 
+                    v-for="excSet in excSetList" 
+                    v-bind:key="excSet.name"
+                    v-on:click.left="curExcSet.active = false; excSet.active=true; curExcSet = excSet;">
+                    <span class="home item-text">{{excSet.name}} </span>
+                    <span class="home item-sec-text">作者 {{excSet.author}}</span>
+                    <span class="home item-sec-text">题数 {{excSet.num}}</span>
+                    <span class="home item-sec-text">更新时间 {{excSet.lastTime}}</span>
+                </div>
+            </ul>
+        </div>        
+        <div class="tab">
+            <div class="inner-tab" style="float:right">自选</div>
+            <div class="inner-tab" style="float:right">偏好</div>
+            <div class="inner-tab" v-if="this.curExcSet!=null">当前题集 {{this.curExcSet.name}}</div>
+        </div>        
     </div>
 </template>
 
@@ -54,16 +54,10 @@ export default {
     },
     methods:{
         toDoExcise(){
-            var curExcSetList = [];
-            for(var i = 0; i < this.excSetList.length; i++){
-                if(this.excSetList[i].active){
-                    curExcSetList.push(this.excSetList[i]);
-                }
-            }
             this.$router.push({
                 name: 'do-excise',
                 params: {
-                    data: JSON.stringify(curExcSetList),
+                    data: JSON.stringify(this.curExcSet),
                 }
             });
         },
@@ -71,52 +65,23 @@ export default {
             location.reload();
         },
         toAbout(){
-
+            this.$router.push({
+                name: 'about',
+                params: {
+                    data: JSON.stringify(this.curExcSet),
+                }
+            });
         }
     }
 }
 </script>
 
 <style>
-    .home.container {
+    .container {
         top: 0;
-        margin: 0%;
-        width: 95%;
-        float: right;
-    }
-
-    .home.exc{
-        width: 80%;
-        padding: 0%;
-        margin-left: auto;
-        margin-right: auto;
-        background-color: white;
-    }
-
-    .home.exc.active{
-        background-color: lightyellow;
-    }
-
-    .home.exc-item{        
-        background-color: whitesmoke;
-        padding-top: 1%;
-        padding-bottom: 1%;
-        padding-left: 2%;
-        margin-top: 5px;
-        margin-bottom: 10px;
-        border-radius: 10px;
-    }
-    
-    .home.exc-item.active{
-        background-color: lightgray;
-    }
-
-    .home.item-text{     
-        font-size: 20px;
-    }
-    .home.item-sec-text{
-        font-size: 15px;
-        padding-left: 1%;
+        padding-left: 60px;
+        width: calc(100% - 60px);
+        float: left;
     }
     .tab{
         width: 100%;
@@ -154,4 +119,38 @@ export default {
         margin-top: 30px;
         margin-bottom: 30px;
     }
+    .home.exc{
+        width: 100%;
+        margin: 0%;
+        padding-top: 1%;
+        padding-left: 0;
+        padding-right: 0;
+        background-color: white;
+    }
+
+    .home.exc-item{
+        width: 80%;
+        margin-bottom: 10px;
+        margin-top: 5px;
+        margin-left: auto;
+        margin-right: auto;        
+        padding-top: 1%;
+        padding-bottom: 1%;
+        background-color: whitesmoke;
+        border-radius: 10px;
+    }
+    
+    .home.exc-item.active{
+        background-color: lightgray;
+    }
+
+    .home.item-text{     
+        padding-left: 2%;
+        font-size: 20px;
+    }
+    .home.item-sec-text{
+        font-size: 15px;
+        padding-left: 1%;
+    }
+    
 </style>
