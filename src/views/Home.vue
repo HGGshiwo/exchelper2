@@ -2,13 +2,13 @@
     <div>
         <ul class="bar">
             <div class="inner-bar">
-                <img src="../assets/select-active.png"  style="width:40px; height:40px" v-on:click="toHome()" />
+                <img src="../assets/select-active.png"  style="width:35px; height:35px" v-on:click="toHome()" />
             </div>
             <div class="inner-bar">
-                <img src="../assets/do-excise.png"  style="width:40px; height:40px" v-on:click="toDoExcise()"/>
+                <img src="../assets/do-excise.png"  style="width:35px; height:35px" v-on:click="toDoExcise()"/>
             </div>
             <div class="inner-bar">
-                <img src="../assets/about.png"  style="width:40px; height:40px" v-on:click="toAbout()"/>
+                <img src="../assets/about.png"  style="width:35px; height:35px" v-on:click="toAbout()"/>
             </div>
         </ul>
         <div class="container">
@@ -25,9 +25,9 @@
             </ul>
         </div>        
         <div class="tab">
+            <div class="inner-tab" style="float:left;cursor:pointer;" v-on:click="fresh">更新</div>
             <div class="inner-tab" style="float:right">自选</div>
-            <div class="inner-tab" style="float:right">偏好</div>
-            <div class="inner-tab" v-if="this.curExcSet!=null">当前题集 {{this.curExcSet.name}}</div>
+            <div class="inner-tab" v-if="this.curExcSet!=null" style="float:right">当前题集 {{this.curExcSet.name}}</div>
         </div>        
     </div>
 </template>
@@ -71,6 +71,9 @@ export default {
                     data: JSON.stringify(this.curExcSet),
                 }
             });
+        },
+        fresh(){
+            
         }
     }
 }
@@ -79,8 +82,8 @@ export default {
 <style>
     .container {
         top: 0;
-        padding-left: 60px;
-        width: calc(100% - 60px);
+        padding-left: 50px;
+        width: calc(100% - 55px);
         float: left;
     }
     .tab{
@@ -105,7 +108,7 @@ export default {
     }
 
     .bar{
-        width: 60px;
+        width: 50px;
         height: 100%;
         background-color: #303030;
         position: fixed;

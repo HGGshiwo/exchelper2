@@ -2,8 +2,7 @@
 <div>
     <div class="about container"> 
         <div class="text hello">你好, ExcHelper</div>
-        <div class="text">
-            <div class="text h1">使用介绍</div>
+        <div class="text" style="padding-left:30%;padding-top:50px">
             <div>
                 <img src="../assets/select.png" style="height:30px; width:30px; float:left; margin-right:0.5%"/>
                 <div class="text h2">自选</div>
@@ -12,7 +11,7 @@
                 <li class="about list">在自选界面选择题库，当前只支持选择一个题库</li>
                 <li class="about list">点击右侧导航栏的刷题进入刷题模式</li>
             </ul>
-            <div>
+            <div style="margin-top:40px">
                 <img src="../assets/do-excise.png" style="height:30px; width:30px; float:left; margin-right:0.5%"/>
                 <div class="text h2">刷题</div>
             </div>
@@ -25,7 +24,7 @@
                 <li  class="about list">点击页面下方工具栏中提交，提交所有选项</li>
                 <li  class="about list">使用同一个浏览器，保存最近一次的做题记录。</li>
             </ul> 
-            <div>
+            <div style="margin-top:40px">
                 <img src="../assets/about.png" style="height:30px; width:30px; float:left; margin-right:0.5%"/>
                 <div class="text h2">相关</div>
             <ul >
@@ -33,9 +32,12 @@
             </ul>
             </div>  
         </div>
-        <nav style="margin-top:5%">
+        <nav style="margin-top:100px">
             <a class="contact"  href="mailto:1272126735@qq.com">联系作者</a> 
+            <span class="contact">|</span>
             <a class="contact"  href="https://github.com/HGGshiwo/exchelper2">项目地址</a>
+            <span class="contact">|</span>
+            <a class="contact"  href="http://www.cc98.org/user/id/632571">CC98</a> 
         </nav>
         
     </div>
@@ -44,13 +46,13 @@
         </div>        
         <ul class="bar">
             <div class="inner-bar">
-                <img src="../assets/select.png"  style="width:40px; height:40px" v-on:click="toHome()" />
+                <img src="../assets/select.png"  style="width:35px; height:35px" v-on:click="toHome()" />
             </div>
             <div class="inner-bar">
-                <img src="../assets/do-excise.png"  style="width:40px; height:40px" v-on:click="toDoExcise()"/>
+                <img src="../assets/do-excise.png"  style="width:35px; height:35px" v-on:click="toDoExcise()"/>
             </div>
             <div class="inner-bar">
-                <img src="../assets/about-active.png"  style="width:40px; height:40px" v-on:click="toAbout()"/>
+                <img src="../assets/about-active.png"  style="width:35px; height:35px" v-on:click="toAbout()"/>
             </div>
         </ul>
 </div>

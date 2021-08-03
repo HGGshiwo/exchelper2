@@ -2,24 +2,25 @@
     <div>
         <ul class="bar">
             <div class="inner-bar">
-                <img src="../assets/select.png"  style="width:40px; height:40px" v-on:click="toHome()" />
+                <img src="../assets/select.png"  style="width:35px; height:35px" v-on:click="toHome()" />
             </div>
             <div class="inner-bar">
-                <img src="../assets/do-excise-active.png"  style="width:40px; height:40px" v-on:click="toDoExcise()"/>
+                <img src="../assets/do-excise-active.png"  style="width:35px; height:35px" v-on:click="toDoExcise()"/>
             </div>
             <div class="inner-bar">
-                <img src="../assets/about.png"  style="width:40px; height:40px" v-on:click="toAbout()"/>
+                <img src="../assets/about.png"  style="width:35px; height:35px" v-on:click="toAbout()"/>
             </div>
         </ul>        
         <div class="container">
             <ul class="exc">
-                <div class="exc-item" v-for="exc in this.excList" :key="exc.id">
+                <div  class="exc-item" v-for="exc in this.excList" :key="exc.id">
+                    <a :id="exc.id"></a>
                     <span class="exc-text">
                         <span style="margin-right:1%">{{exc.id}}</span>
                         <span>{{exc.text}}</span>
                     </span>
                     <ul style="padding:0">
-                        <div v-for="choice in exc.choices" :key="choice.id"
+                        <div  v-for="choice in exc.choices" :key="choice.id"
                             v-bind:class="{'choice':true, 'active': choice.active}" 
                             v-on:click.left="choice.active=exc.submit?choice.active :!choice.active; if(!exc.submit) checkChooseLogic(exc, choice);"
                             v-on:click.right=";if(exc.submit && choice.active){ exc.submit = !exc.submit; handleReset(exc); } else if(!exc.submit && choice.active){exc.submit = !exc.submit; handleSubmit(exc);} else if(!exc.submit && !choice.active){exc.submit = !exc.submit; choice.active = true; checkChooseLogic(exc, choice); handleSubmit(exc);}">
@@ -35,16 +36,15 @@
             <div style="height:25px; width:100%"></div>    
         </div>
         <div class="tab">
-            <div class="inner-tab" style="float:left;" v-on:click="submitAll">提交</div>
-            <div class="inner-tab" style="float:left;" v-on:click="resetAll">重做</div>
-            <div class="inner-tab" style="float:left" v-on:click="onSearch">搜索</div>
-            <div class="inner-tab">题集 {{this.$data.curSet}} </div>
-            <div class="inner-tab">题号 {{this.$data.curExc}} </div>
-            <div class="inner-tab">正确率 {{calcCorRate()}} </div>
-            <div class="inner-tab">开始 {{('00' + this.startHour.toString()).slice(-2) + ":" + ('00'+this.startMim.toString()).slice(-2)}} </div>
-            <div class="inner-tab">时长 {{this.dTime}} </div>
+            <div class="inner-tab" style="float:left; cursor:pointer;" v-on:click="submitAll">提交</div>
+            <div class="inner-tab" style="float:left; cursor:pointer;" v-on:click="resetAll">重做</div>
+            <div class="inner-tab" style="float:left; cursor:pointer;" v-on:click="toCurExc" >当前</div>
             <div class="inner-tab" style="float:right">刷题模式</div>
-            
+            <div class="inner-tab" style="float:right">正确率 {{calcCorRate()}} </div>
+            <div class="inner-tab" style="float:right">开始 {{('00' + this.startHour.toString()).slice(-2) + ":" + ('00'+this.startMim.toString()).slice(-2)}} </div>
+            <div class="inner-tab" style="float:right">时长 {{this.dTime}} </div>
+            <div class="inner-tab" style="float:right">题号 {{this.$data.curExc}} </div>
+           <div class="inner-tab" style="float:right">题集 {{this.$data.curSet}} </div> 
         </div>        
         
     </div>
@@ -145,6 +145,10 @@ export default {
             }
         },
 
+        toCurExc(){
+            window.location.hash = "#"+String(this.curExc);
+        },
+
         checkChooseLogic(exc, choice){
             if(exc.key.length == 1){
                 for(var i = 0; i < exc.choices.length; i++){
@@ -153,10 +157,6 @@ export default {
                     }
                 }
             }
-        },
-
-        onSearch(){
-            alert("未实现搜索功能。");
         },
         
         toDoExcise(){
@@ -316,5 +316,4 @@ export default {
     .result.wrong {
         background: #FFA5A5;
     }
-
 </style>
